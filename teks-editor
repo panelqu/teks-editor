@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanelQu - Pro Code & Text Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <!-- Pustaka pendukung untuk unduh ZIP semua file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col justify-between font-sans transition-colors duration-200" id="bodyRoot">
+
+    <!-- Header Profesional -->
+    <header class="bg-slate-900 border-b border-slate-800 py-3 px-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="bg-indigo-600 text-white font-mono text-xs px-2 py-1 rounded font-bold">PRO</span>
+                <h1 class="text-base font-bold tracking-wide text-indigo-400">PanelQu <span class="text-xs font-normal text-slate-400">Studio</span></h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTheme()" id="themeBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1.5 rounded-lg border border-slate-700 transition" title="Ganti Tema Terang/Gelap">
+                    ☀️ Mode Terang
+                </button>
+                <span id="saveStatus" class="text-xs text-emerald-400 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Tersimpan
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="max-w-6xl w-full mx-auto p-3 sm:p-4 flex-1 flex flex-col my-2 gap-3">
+        
+        <!-- Toolbar Atas -->
+        <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3 bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+            <!-- Daftar Tab File -->
+            <div id="fileTabs" class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-thin">
+                <!-- Diisi otomatis oleh JS -->
+            </div>
+            
+            <!-- Aksi Cepat -->
+            <div class="flex items-center gap-2 shrink-0 flex-wrap">
+                <button onclick="toggleFindReplace()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium py-2 px-3 rounded-lg border border-slate-300 dark:border-slate-700 transition">
+                    🔍 Cari & Ganti
+                </button>
+                <button onclick="insertTemplate()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium py-2 px-3 rounded-lg border border-slate-300 dark:border-slate-700 transition">
+                    ⚡ Template HTML
+                </button>
+                <button onclick="createNewFile()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium py-2 px-3 rounded-lg transition shadow-sm">
+                    + File Baru
+                </button>
+            </div>
+        </div>
+
+        <!-- Panel Cari & Ganti -->
+        <div id="findReplacePane" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-xl shadow-md hidden flex flex-col md:flex-row gap-2 items-center transition-colors">
+            <input type="text" id="findText" placeholder="Cari teks..." class="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs rounded-lg px-3 py-2 flex-1 focus:outline-none focus:border-indigo-500">
+            <input type="text" id="replaceText" placeholder="Ganti dengan..." class="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-xs rounded-lg px-3 py-2 flex-1 focus:outline-none focus:border-indigo-500">
+            <div class="flex gap-2 w-full md:w-auto">
+                <button onclick="executeFind()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 transition flex-1">Cari</button>
+                <button onclick="executeReplace()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-2 rounded-lg transition flex-1">Ganti Semua</button>
+                <button onclick="toggleFindReplace()" class="text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white px-2 text-xs">✕</button>
+            </div>
+        </div>
+
+        <!-- Area Editor & Workspace -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-1">
+            
+            <!-- Kotak Utama Editor -->
+            <div id="editorPane" class="lg:col-span-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xl transition-colors duration-200" style="min-height: 480px;">
+                
+                <!-- Bar Informasi File Aktif -->
+                <div class="bg-slate-100 dark:bg-slate-950/60 px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs text-slate-600 dark:text-slate-300 font-mono transition-colors">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                        <span id="activeFileName" class="font-bold text-indigo-600 dark:text-indigo-300">Memuat...</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="togglePreview()" id="previewBtn" class="text-amber-600 dark:text-amber-400 hover:underline transition font-medium">👁️ Buka Preview</button>
+                        <span class="text-slate-400 dark:text-slate-600">|</span>
+                        <button onclick="deleteCurrentFile()" class="text-rose-600 dark:text-rose-400 hover:underline transition">Hapus File</button>
+                    </div>
+                </div>
+
+                <!-- Textarea Code Editor -->
+                <textarea id="editorText" 
+                    class="w-full flex-1 p-4 bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-200 font-mono text-sm focus:outline-none resize-none leading-relaxed transition-colors" 
+                    placeholder="Mulai menulis kode atau catatan di sini..."></textarea>
+                
+                <!-- Bar Bawah -->
+                <div class="bg-slate-100 dark:bg-slate-950/60 px-4 py-3 border-t border-slate-200 dark:border-slate-800 flex flex-wrap justify-between items-center gap-3 text-xs text-slate-500 dark:text-slate-400 transition-colors">
+                    <div class="flex flex-wrap gap-3 sm:gap-4 font-mono">
+                        <span>Baris: <strong id="lineCount" class="text-indigo-600 dark:text-indigo-400">1</strong></span>
+                        <span>Kata: <strong id="wordCount" class="text-indigo-600 dark:text-indigo-400">0</strong></span>
+                        <span>Karakter: <strong id="charCount" class="text-indigo-600 dark:text-indigo-400">0</strong></span>
+                        <span>Ukuran: <strong id="fileSize" class="text-indigo-600 dark:text-indigo-400">0 B</strong></span>
+                    </div>
+                    
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="downloadAllZip()" class="bg-indigo-700 hover:bg-indigo-600 text-white font-medium py-1.5 px-3 rounded-lg transition shadow-sm">Unduh ZIP</button>
+                        <button onclick="downloadFile()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-1.5 px-3 rounded-lg transition shadow-sm">Unduh File Ini</button>
+                        <button onclick="copyText()" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium py-1.5 px-3 rounded-lg transition">Salin</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Preview -->
+            <div id="previewPane" class="lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex-col shadow-xl hidden transition-colors" style="min-height: 480px;">
+                <div class="bg-slate-100 dark:bg-slate-950/60 px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs text-slate-600 dark:text-slate-300 font-mono">
+                    <span class="font-bold text-amber-600 dark:text-amber-400">Pratinjau Langsung (Live Preview)</span>
+                    <button onclick="togglePreview()" class="text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white">✕ Tutup</button>
+                </div>
+                <iframe id="previewFrame" class="w-full flex-1 bg-white border-none"></iframe>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-500 dark:text-slate-500 border-t border-slate-200 dark:border-slate-900 transition-colors">
+        &copy; 2026 panelqu.web.id &bull; Professional Web & Text Studio
+    </footer>
+
+    <!-- Logic JavaScript -->
+    <script>
+        const editor = document.getElementById('editorText');
+        const lineCount = document.getElementById('lineCount');
+        const wordCount = document.getElementById('wordCount');
+        const charCount = document.getElementById('charCount');
+        const fileSize = document.getElementById('fileSize');
+        const saveStatus = document.getElementById('saveStatus');
+        const fileTabs = document.getElementById('fileTabs');
+        const activeFileName = document.getElementById('activeFileName');
+        
+        const editorPane = document.getElementById('editorPane');
+        const previewPane = document.getElementById('previewPane');
+        const previewFrame = document.getElementById('previewFrame');
+        const previewBtn = document.getElementById('previewBtn');
+        const findReplacePane = document.getElementById('findReplacePane');
+        const themeBtn = document.getElementById('themeBtn');
+
+        let files = JSON.parse(localStorage.getItem('panelqu_pro_files')) || {
+            "index.html": "<!DOCTYPE html>\n<html lang=\"id\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Halaman Web Saya</title>\n    <style>\n        body { font-family: sans-serif; text-align: center; padding-top: 50px; background: #f4f4f4; }\n        h1 { color: #4f46e5; }\n    </style>\n</head>\n<body>\n    <h1>Halo, Selamat Datang di PanelQu!</h1>\n    <p>Ini adalah pratinjau instan dari kode HTML Anda.</p>\n</body>\n</html>",
+            "style.css": "/* Kustom CSS */\nbody {\n    margin: 0;\n    padding: 20px;\n}",
+            "catatan.txt": "Catatan Pro:\n- Semua file tersimpan otomatis di browser HP.\n- Mode terang & gelap aktif!"
+        };
+
+        let currentFile = Object.keys(files)[0];
+        let isPreviewOpen = false;
+        let isFindOpen = false;
+
+        function initEditor() {
+            renderTabs();
+            loadActiveFile();
+            loadTheme();
+        }
+
+        function renderTabs() {
+            fileTabs.innerHTML = '';
+            for (let filename in files) {
+                let isActive = filename === currentFile;
+                let btn = document.createElement('button');
+                btn.className = `px-3 py-1.5 rounded-lg text-xs font-mono transition whitespace-nowrap flex items-center gap-1.5 ${isActive ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700/50'}`;
+                btn.innerHTML = `<span>${filename}</span>`;
+                btn.onclick = () => switchFile(filename);
+                fileTabs.appendChild(btn);
+            }
+        }
+
+        function switchFile(filename) {
+            files[currentFile] = editor.value; 
+            currentFile = filename;
+            loadActiveFile();
+            renderTabs();
+            if (isPreviewOpen) updatePreview();
+        }
+
+        function loadActiveFile() {
+            editor.value = files[currentFile] || '';
+            activeFileName.innerText = currentFile;
+            updateStats();
+        }
+
+        function createNewFile() {
+            let filename = prompt("Masukkan nama file baru (contoh: about.html, script.js, catatan.txt):");
+            if (!filename) return;
+            filename = filename.trim();
+            
+            if (files[filename]) {
+                alert("Nama file tersebut sudah ada!");
+                return;
+            }
+
+            files[filename] = "";
+            switchFile(filename);
+            saveData();
+        }
+
+        function deleteCurrentFile() {
+            const fileKeys = Object.keys(files);
+            if (fileKeys.length <= 1) {
+                alert("Minimal harus ada 1 file tersisa di dalam workspace!");
+                return;
+            }
+
+            if (confirm(`Yakin ingin menghapus file "${currentFile}"?`)) {
+                delete files[currentFile];
+                currentFile = Object.keys(files)[0];
+                loadActiveFile();
+                renderTabs();
+                saveData();
+                if (isPreviewOpen) updatePreview();
+            }
+        }
+
+        editor.addEventListener('input', () => {
+            files[currentFile] = editor.value;
+            updateStats();
+            saveData();
+            if (isPreviewOpen && currentFile.endsWith('.html')) {
+                updatePreview();
+            }
+        });
+
+        function updateStats() {
+            const text = editor.value;
+            charCount.innerText = text.length;
+            lineCount.innerText = text.split('\n').length;
+            wordCount.innerText = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            
+            const bytes = new Blob([text]).size;
+            if (bytes < 1024) {
+                fileSize.innerText = bytes + ' B';
+            } else {
+                fileSize.innerText = (bytes / 1024).toFixed(1) + ' KB';
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('panelqu_pro_files', JSON.stringify(files));
+            saveStatus.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Menyimpan...`;
+            setTimeout(() => {
+                saveStatus.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> Tersimpan`;
+            }, 300);
+        }
+
+        function insertTemplate() {
+            const templateHTML = `<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judul Dokumen</title>
+    <style>
+        body { font-family: system-ui, sans-serif; padding: 2rem; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Judul Utama</h1>
+    <p>Tulis konten Anda di sini...</p>
+</body>
+</html>`;
+            if (confirm("Sisipkan kerangka dasar HTML ke dalam editor saat ini?")) {
+                editor.value = templateHTML;
+                files[currentFile] = editor.value;
+                updateStats();
+                saveData();
+                if (isPreviewOpen) updatePreview();
+            }
+        }
+
+        function togglePreview() {
+            isPreviewOpen = !isPreviewOpen;
+            if (isPreviewOpen) {
+                editorPane.className = "lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xl transition-colors duration-200";
+                previewPane.className = "lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xl flex transition-colors";
+                previewBtn.innerText = "❌ Tutup Preview";
+                updatePreview();
+            } else {
+                editorPane.className = "lg:col-span-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xl transition-colors duration-200";
+                previewPane.className = "lg:col-span-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden flex flex-col shadow-xl hidden transition-colors";
+                previewBtn.innerText = "👁️ Buka Preview";
+            }
+        }
+
+        function updatePreview() {
+            const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+            doc.open();
+            doc.write(editor.value);
+            doc.close();
+        }
+
+        function toggleFindReplace() {
+            isFindOpen = !isFindOpen;
+            findReplacePane.style.display = isFindOpen ? 'flex' : 'none';
+        }
+
+        function executeFind() {
+            const query = document.getElementById('findText').value;
+            if (!query) return;
+            const content = editor.value;
+            const index = content.indexOf(query, editor.selectionEnd);
+            if (index !== -1) {
+                editor.focus();
+                editor.setSelectionRange(index, index + query.length);
+            } else {
+                const firstIndex = content.indexOf(query);
+                if (firstIndex !== -1) {
+                    editor.focus();
+                    editor.setSelectionRange(firstIndex, firstIndex + query.length);
+                } else {
+                    alert("Teks tidak ditemukan!");
+                }
+            }
+        }
+
+        function executeReplace() {
+            const query = document.getElementById('findText').value;
+            const replacement = document.getElementById('replaceText').value;
+            if (!query) return;
+            
+            if (confirm(`Ganti semua kata "${query}" dengan "${replacement}"?`)) {
+                editor.value = editor.value.split(query).join(replacement);
+                files[currentFile] = editor.value;
+                updateStats();
+                saveData();
+                if (isPreviewOpen) updatePreview();
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            if (isDark) {
+                themeBtn.innerText = "☀️ Mode Terang";
+                localStorage.setItem('panelqu_theme', 'dark');
+            } else {
+                themeBtn.innerText = "🌙 Mode Gelap";
+                localStorage.setItem('panelqu_theme', 'light');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('panelqu_theme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                themeBtn.innerText = "🌙 Mode Gelap";
+            } else {
+                document.documentElement.classList.add('dark');
+                themeBtn.innerText = "☀️ Mode Terang";
+            }
+        }
+
+        function copyText() {
+            editor.select();
+            navigator.clipboard.writeText(editor.value);
+            alert("Berhasil menyalin isi file ke clipboard!");
+        }
+
+        function downloadFile() {
+            const blob = new Blob([editor.value], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = currentFile;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        async function downloadAllZip() {
+            files[currentFile] = editor.value;
+            const zip = new JSZip();
+            
+            for (let filename in files) {
+                zip.file(filename, files[filename]);
+            }
+
+            const content = await zip.generateAsync({ type: "blob" });
+            const url = URL.createObjectURL(content);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "panelqu-workspace.zip";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        initEditor();
+    </script>
+
+</body>
+</html>

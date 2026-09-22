@@ -149,9 +149,11 @@ const PRO_CODE_TEMPLATES = {
 
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
-            const creditElement = document.getElementById('panelqu-credit');
-            if (!creditElement || creditElement.innerText.indexOf('PanelQu') === -1) {
-                document.body.innerHTML = "<h2 style='text-align:center; margin-top:35vh; color:red; font-family:sans-serif;'>Error: Atribut Sistem PanelQu tidak boleh dihapus!</h2>";
+            if (window.self === window.top) {
+                const creditElement = document.getElementById('panelqu-credit');
+                if (!creditElement || creditElement.innerText.indexOf('PanelQu') === -1) {
+                    document.body.innerHTML = "<h2 style='text-align:center; margin-top:35vh; color:red; font-family:sans-serif;'>Error: Atribut Sistem PanelQu tidak boleh dihapus!</h2>";
+                }
             }
         });
     </script>

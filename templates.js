@@ -107,14 +107,11 @@ const PRO_CODE_TEMPLATES = {
             margin-bottom: 0.3rem;
         }
     </style>
-
-    <!--  -->
     <script>(function(s){s.dataset.zone='11851076',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))<\\/script>
 </head>
 <body>
 
     <div class="bio-container">
-        <!-- KOTAK PANDUAN -->
         <div class="guide-box">
             <h4>💡 Panduan Edit Cepat:</h4>
             <p>1. Ganti link foto profil pada tag &lt;img src="..."&gt;.</p>
@@ -122,16 +119,13 @@ const PRO_CODE_TEMPLATES = {
             <p>3. Ganti link tujuan pada href="..." dan teks tombolnya.</p>
         </div>
 
-        <!-- FOTO PROFIL -->
         <div class="profile-pic">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Foto Profil">
         </div>
 
-        <!-- NAMA & BIO -->
         <h1 class="profile-name">Sarah Jenkins</h1>
         <p class="profile-bio">Digital Creator & UI/UX Enthusiast. Temukan semua tautan penting saya di sini!</p>
 
-        <!-- DAFTAR TOMBOL TAUTAN -->
         <div class="link-list">
             <a href="https://wa.me/6281234567890" class="link-btn" target="_blank">
                 <span>💬 Chat WhatsApp Admin</span>
@@ -147,14 +141,12 @@ const PRO_CODE_TEMPLATES = {
             </a>
         </div>
 
-        <!--  -->
         <footer id="panelqu-credit" class="bio-footer">
             <p>&copy; 2026 Sarah Jenkins. All rights reserved.</p>
             <p style="margin-top: 5px;">Dibuat dengan <a href="https://omg10.com/4/9089458" target="_blank">PanelQu</a></p>
         </footer>
     </div>
 
-    <!--  -->
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
             const creditElement = document.getElementById('panelqu-credit');

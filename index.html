@@ -127,7 +127,10 @@
         &copy; 2026 panelqu.web.id &bull; Professional Web & Text Studio
     </footer>
 
-    <!-- Logic JavaScript -->
+    <!-- PEMANGGILAN FILE TEMPLATES.JS -->
+    <script src="templates.js"></script>
+
+    <!-- Logic JavaScript Utama -->
     <script>
         const editor = document.getElementById('editorText');
         const lineCount = document.getElementById('lineCount');
@@ -250,27 +253,43 @@
             }, 300);
         }
 
+        // FUNGSI TEMPLATE YANG DIPERBARUI
         function insertTemplate() {
-            const templateHTML = `<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Judul Dokumen</title>
-    <style>
-        body { font-family: system-ui, sans-serif; padding: 2rem; color: #333; }
-    </style>
-</head>
-<body>
-    <h1>Judul Utama</h1>
-    <p>Tulis konten Anda di sini...</p>
-</body>
-</html>`;
-            if (confirm("Sisipkan kerangka dasar HTML ke dalam editor saat ini?")) {
-                editor.value = templateHTML;
-                files[currentFile] = editor.value;
-                updateStats();
+            if (typeof PRO_CODE_TEMPLATES === 'undefined') {
+                alert("File templates.js tidak ditemukan! Pastikan file tersebut sudah ada di folder yang sama.");
+                return;
+            }
+
+            const pilihan = prompt(
+                "Pilih Template HTML Instan:\n" +
+                "1. Landing Page Produk\n" +
+                "2. Portofolio Pribadi\n\n" +
+                "Ketik angka 1 atau 2:"
+            );
+
+            let templateKey = "";
+            if (pilihan === "1") templateKey = "landingPage";
+            else if (pilihan === "2") templateKey = "portfolio";
+            else {
+                if (pilihan) alert("Pilihan tidak valid, dibatalkan.");
+                return;
+            }
+
+            const templatePilihan = PRO_CODE_TEMPLATES[templateKey];
+            
+            if (confirm(`Peringatan: Memuat template "${templatePilihan.name}" akan mengganti SEMUA file di workspace Anda saat ini. Lanjutkan?`)) {
+                
+                // Menyalin semua file dari template ke workspace
+                files = Object.assign({}, templatePilihan.files);
+                
+                // Set file yang terbuka saat ini ke index.html
+                currentFile = files["index.html"] ? "index.html" : Object.keys(files)[0];
+                
+                // Simpan dan segarkan tampilan
                 saveData();
+                initEditor();
+                
+                alert(`Berhasil! Template "${templatePilihan.name}" sudah dimuat.`);
                 if (isPreviewOpen) updatePreview();
             }
         }

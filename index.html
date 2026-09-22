@@ -367,4 +367,44 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.downl
+            a.download = currentFile;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        async function downloadAllZip() {
+            files[currentFile] = editor.value;
+            const zip = new JSZip();
+            
+            for (let filename in files) {
+                zip.file(filename, files[filename]);
+            }
+
+            const content = await zip.generateAsync({ type: "blob" });
+            const url = URL.createObjectURL(content);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "panelqu-workspace.zip";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        initEditor();
+    </script>
+
+    <script>
+  // Mengatur durasi 30 menit dalam milidetik (30 menit * 60 detik * 1000 ms)
+  const waktuDurasi = 30 * 60 * 1000; 
+
+  setTimeout(function() {
+    // Alihkan halaman kembali ke halaman utama (ganti URL di bawah jika halaman utama Anda berbeda)
+    window.location.href = "index.html"; 
+  }, waktuDurasi);
+</script>
+
+</body>
+</html>

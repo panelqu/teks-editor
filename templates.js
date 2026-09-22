@@ -9,7 +9,6 @@ const PRO_CODE_TEMPLATES = {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>(function(s){s.dataset.zone='11851076',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
     <title>Link Bio Profesional</title>
     <style>
         * {
@@ -146,6 +145,8 @@ const PRO_CODE_TEMPLATES = {
             <p>&copy; 2026 Sarah Jenkins. All rights reserved.</p>
         </footer>
     </div>
+
+    <script>(function(s){s.dataset.zone='11851076',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 </body>
 </html>`,

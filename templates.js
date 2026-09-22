@@ -87,10 +87,6 @@ const templates = {
             font-size: 0.8rem;
             color: #6b7280;
         }
-        .bio-footer a {
-            color: #38bdf8;
-            text-decoration: none;
-        }
         .guide-box {
             background: #1e293b;
             border: 1px dashed #475569;
@@ -106,9 +102,6 @@ const templates = {
             margin-bottom: 0.3rem;
         }
     </style>
-
-    <!-- SCRIPT IKLAN (TAG / POPUNDER) -->
-    <script>(function(s){s.dataset.zone='11851076',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 </head>
 <body>
 
@@ -146,22 +139,11 @@ const templates = {
             </a>
         </div>
 
-        <!-- FOOTER DENGAN DIRECT LINK YANG DILINDUNGI -->
-        <footer id="panelqu-credit" class="bio-footer">
+        <!-- FOOTER -->
+        <footer class="bio-footer">
             <p>&copy; 2026 Sarah Jenkins. All rights reserved.</p>
-            <p style="margin-top: 5px;">Dibuat dengan <a href="https://omg10.com/4/9089458" target="_blank">PanelQu</a></p>
         </footer>
     </div>
-
-    <!-- SCRIPT PENGAMAN (ANTI-HAPUS ATRIBUT) -->
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            const creditElement = document.getElementById('panelqu-credit');
-            if (!creditElement || creditElement.innerText.indexOf('PanelQu') === -1) {
-                document.body.innerHTML = "<h2 style='text-align:center; margin-top:35vh; color:red; font-family:sans-serif;'>Error: Atribut Sistem PanelQu tidak boleh dihapus!</h2>";
-            }
-        });
-    </script>
 
 </body>
 </html>`

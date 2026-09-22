@@ -260,20 +260,25 @@
                 return;
             }
 
-            const pilihan = prompt(
-                "Pilih Template HTML Instan:\n" +
-                "1. Landing Page Produk\n" +
-                "2. Portofolio Pribadi\n\n" +
-                "Ketik angka 1 atau 2:"
-            );
+                let daftarTeks = "Pilih Template HTML Instan:\n\n";
+    const keys = Object.keys(PRO_CODE_TEMPLATES);
+    
+    keys.forEach((key, index) => {
+        daftarTeks += (index + 1) + ". " + PRO_CODE_TEMPLATES[key].name + "\n";
+    });
+    
+    daftarTeks += "\nKetik nomor pilihan Anda:";
 
-            let templateKey = "";
-            if (pilihan === "1") templateKey = "landingPage";
-            else if (pilihan === "2") templateKey = "portfolio";
-            else {
-                if (pilihan) alert("Pilihan tidak valid, dibatalkan.");
-                return;
-            }
+    const pilihan = prompt(daftarTeks);
+    if (!pilihan) return;
+
+    const indexPilihan = parseInt(pilihan) - 1;
+    let templateKey = keys[indexPilihan];
+
+    if (!templateKey || !PRO_CODE_TEMPLATES[templateKey]) {
+        alert("Pilihan tidak valid, dibatalkan.");
+        return;
+    }
 
             const templatePilihan = PRO_CODE_TEMPLATES[templateKey];
             

@@ -1,5 +1,4 @@
 // templates.js - Pusat Data Template PanelQu
-
 const templates = {
     "linkBio": {
         name: "Link Bio Profesional",
@@ -168,5 +167,4 @@ const templates = {
 </html>`
         }
     }
-    // Jika nanti ada template lain, bisa ditambahkan di bawah sini dengan format koma (,)
 };

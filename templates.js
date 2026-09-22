@@ -1,11 +1,44 @@
-// templates.js - Template Link-in-Bio Minimalis Modern
+// templates.js - Harus menggunakan nama PRO_CODE_TEMPLATES
 const PRO_CODE_TEMPLATES = {
-    linkBio: {
-        name: "Link-in-Bio Minimalis Modern",
-        description: "Template halaman profil tautan praktis ala Linktree untuk media sosial.",
+    "linkBio": {
+        name: "Link Bio Profesional",
         files: {
-            "index.html": "<!DOCTYPE html>\n<html lang=\"id\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Link Bio Profesional</title>\n    <style>\n        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }\n        body { background-color: #0b0f19; color: #f3f4f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }\n        .bio-container { width: 100%; max-width: 480px; text-align: center; padding: 2rem 1rem; }\n        .profile-pic { width: 96px; height: 96px; margin: 0 auto 1rem auto; border-radius: 50%; overflow: hidden; border: 2px solid #38bdf8; }\n        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }\n        .profile-name { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem; }\n        .profile-bio { font-size: 0.95rem; color: #9ca3af; margin-bottom: 2.5rem; line-height: 1.5; padding: 0 1rem; }\n        .link-list { display: flex; flex-direction: column; gap: 1rem; }\n        .link-btn { display: block; background-color: #1f2937; color: #ffffff; padding: 1rem 1.5rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.95rem; border: 1px solid #374151; }\n        .link-btn:hover { background-color: #374151; border-color: #38bdf8; }\n        .bio-footer { margin-top: 3rem; font-size: 0.8rem; color: #6b7280; }\n        .bio-footer a { color: #38bdf8; text-decoration: none; }\n        .guide-box { background: #1e293b; border: 1px dashed #475569; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; text-align: left; font-size: 0.85rem; color: #cbd5e1; }\n        .guide-box h4 { color: #38bdf8; margin-bottom: 0.3rem; }\n    </style>\n    <script>(function(s){s.dataset.zone='11851076',s.src='[https://al5sm.com/tag.min.js](https://al5sm.com/tag.min.js)'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))<\\/script>\n</head>\n<body>\n    <div class=\"bio-container\">\n        <div class=\"guide-box\">\n            <h4>💡 Panduan Edit Cepat:</h4>\n            <p>1. Ganti link foto profil pada tag &lt;img src=\"...\"&gt;.</p>\n            <p>2. Ganti Nama dan Bio sesuai data diri Anda.</p>\n            <p>3. Ganti link tujuan pada href=\"...\" dan teks tombolnya.</p>\n        </div>\n        <div class=\"profile-pic\">\n            <img src=\"[https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80](https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80)\" alt=\"Foto Profil\">\n        </div>\n        <h1 class=\"profile-name\">Sarah Jenkins</h1>\n        <p class=\"profile-bio\">Digital Creator & UI/UX Enthusiast. Temukan semua tautan penting saya di sini!</p>\n        <div class=\"link-list\">\n            <a href=\"[https://wa.me/6281234567890](https://wa.me/6281234567890)\" class=\"link-btn\" target=\"_blank\">💬 Chat WhatsApp Admin</a>\n            <a href=\"[https://example.com](https://example.com)\" class=\"link-btn\" target=\"_blank\">🛍️ Kunjungi Toko Online Saya</a>\n            <a href=\"[https://instagram.com](https://instagram.com)\" class=\"link-btn\" target=\"_blank\">📸 Instagram Terbaru</a>\n            <a href=\"[https://example.com](https://example.com)\" class=\"link-btn\" target=\"_blank\">📚 Baca Artikel & Blog</a>\n        </div>\n        <footer id=\"panelqu-credit\" class=\"bio-footer\">\n            <p>&copy; 2026 Sarah Jenkins. All rights reserved.</p>\n            <p style=\"margin-top: 5px;\">Dibuat dengan <a href=\"[https://omg10.com/4/9089458](https://omg10.com/4/9089458)\" target=\"_blank\">PanelQu</a></p>\n        </footer>\n    </div>\n    <script>\n        window.addEventListener('DOMContentLoaded', (event) => {\n            if (window.self === window.top) {\n                const creditElement = document.getElementById('panelqu-credit');\n                if (!creditElement || creditElement.innerText.indexOf('PanelQu') === -1) {\n                    document.body.innerHTML = \"<h2 style='text-align:center; margin-top:35vh; color:red; font-family:sans-serif;'>Error: Atribut Sistem PanelQu tidak boleh dihapus!</h2>\";\n                }\n            }\n        });\n    </script>\n</body>\n</html>",
-            "catatan.txt": "Panduan: Cukup edit file index.html di atas untuk mengubah foto, nama, dan tautan sosial media Anda."
+            "index.html": `<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Bio Profesional</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #f3f4f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .bio-container { width: 100%; max-width: 480px; text-align: center; padding: 2rem 1rem; }
+        .profile-pic { width: 96px; height: 96px; margin: 0 auto 1rem auto; border-radius: 50%; overflow: hidden; border: 2px solid #38bdf8; }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-name { font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem; }
+        .profile-bio { font-size: 0.95rem; color: #9ca3af; margin-bottom: 2.5rem; line-height: 1.5; }
+        .link-list { display: flex; flex-direction: column; gap: 1rem; }
+        .link-btn { display: block; background-color: #1f2937; color: #ffffff; padding: 1rem; border-radius: 12px; text-decoration: none; font-weight: 600; border: 1px solid #374151; }
+        .bio-footer { margin-top: 3rem; font-size: 0.8rem; color: #6b7280; }
+    </style>
+</head>
+<body>
+    <div class="bio-container">
+        <div class="profile-pic">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Foto Profil">
+        </div>
+        <h1 class="profile-name">Sarah Jenkins</h1>
+        <p class="profile-bio">Digital Creator & UI/UX Enthusiast</p>
+        <div class="link-list">
+            <a href="https://wa.me/6281234567890" class="link-btn" target="_blank">💬 Chat WhatsApp Admin</a>
+            <a href="https://instagram.com" class="link-btn" target="_blank">📸 Instagram Terbaru</a>
+        </div>
+        <footer class="bio-footer">
+            <p>&copy; 2026 Sarah Jenkins. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>`
         }
     }
 };

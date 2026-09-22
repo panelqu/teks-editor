@@ -152,7 +152,3 @@ const PRO_CODE_TEMPLATES = {
         }
     }
 };
-
-
-
-Ini yang benar, coba tempel kan iklan pada script ini serta pengaman nya
